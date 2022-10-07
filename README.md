@@ -16,7 +16,7 @@ Please follow these instructions closely:<br>
 •	Push to Github only once all steps are complete<br>
 •	Do not merge back into Main.<br>
 
-Tasks:<br>
+Task 1:<br>
 •	Create two scenes; Main Menu and Level One. <br>
 •	In Main Menu scene, add a UI Button that will load in the Level One scene when the button is clicked.<br>
 •	Create a script to handle the loading of Level One.<br>
@@ -26,6 +26,13 @@ Tasks:<br>
 •	The cube should change to a different colour for each direction it goes (eg, blue if moving left, yellow if moving down etc).<br>
 •	If the cube reaches the edges of the camera view it should re-appear on the opposite edge of the view (eg, if the cube goes off the left side of the view, it should re-appear on the right side of the screen).<br>
 •	Give the player the ability to change the velocity the cube travels at. Use your discretion to implement this, could be UI or keyboard inputs.<br>
+
+Task 2:<br>
+•	Create a new scene called WeatherApp. <br>
+•	Sign up to [OpenWeatherMap](https://openweathermap.org/)
+•	In Unity, develop the functionality to call the OpenWeather API and get the weather info for the capital cities of each province in South Africa.
+•	Display the latest weather data (city name, current temperature, description (cloudy, sunny etc) on a basic Unity UI.
+•	Call the API automatically upon playing the scene.
 
 If you have any questions please email them to us before you get started.
 

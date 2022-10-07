@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
-    private float speed = 5.0f;
+    public TextMeshProUGUI veocityText;
+    private float velocity = 5.0f;
     private Rigidbody rb;
     new Renderer renderer;
 
@@ -31,6 +33,8 @@ public class Player : MonoBehaviour
         cubeWidth = transform.localScale.x;
         cubeHeight = transform.localScale.y;
 
+        veocityText.text = velocity.ToString("0.00");
+
     }
 
     // Update is called once per frame
@@ -39,6 +43,8 @@ public class Player : MonoBehaviour
         MoveAndChangeColor();
 
         KeepObjectInView();
+
+        VelocityControl();
     }
 
     public void MoveAndChangeColor()
@@ -46,28 +52,28 @@ public class Player : MonoBehaviour
         //Move UP
         if (Input.GetKey(KeyCode.W))
         {
-            rb.MovePosition(transform.position + Vector3.up * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + Vector3.up * velocity * Time.deltaTime);
             renderer.material.SetColor("_Color", Color.red);
         }
 
         //Move Left
         else if (Input.GetKey(KeyCode.A))
         {
-            rb.MovePosition(transform.position + Vector3.left * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + Vector3.left * velocity * Time.deltaTime);
             renderer.material.SetColor("_Color", Color.blue);
         }
 
         //Move Right
         else if (Input.GetKey(KeyCode.D))
         {
-            rb.MovePosition(transform.position + Vector3.right * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + Vector3.right * velocity * Time.deltaTime);
             renderer.material.SetColor("_Color", Color.black);
         }
 
         //Move Down
         else if (Input.GetKey(KeyCode.S))
         {
-            rb.MovePosition(transform.position + Vector3.down * speed * Time.deltaTime);
+            rb.MovePosition(transform.position + Vector3.down * velocity * Time.deltaTime);
             renderer.material.SetColor("_Color", Color.yellow);
         }
     }
@@ -96,6 +102,32 @@ public class Player : MonoBehaviour
         else if (transform.position.y < bottomBound - cubeHeight / 2)
         {
             transform.position = new Vector3(transform.position.x, topBound - cubeHeight / 2, transform.position.z);
+        }
+
+    }
+
+    public void VelocityControl()
+    {
+        //Increase velocity
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            velocity -= Time.deltaTime;
+
+            if (velocity < 0.0f)
+                velocity = 0.0f;
+
+            veocityText.text = velocity.ToString("0.00");
+        }
+
+        //Decrease velocity
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            velocity += Time.deltaTime;
+
+            if (velocity > 30.0f)
+                velocity = 30.0f;
+
+            veocityText.text = velocity.ToString("0.00");
         }
 
     }

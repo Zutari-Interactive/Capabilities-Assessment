@@ -29,7 +29,7 @@ Task 1:<br>
 
 Task 2:<br>
 •	Create a new scene called WeatherApp. <br>
-•	Sign up to [OpenWeatherMap](https://openweathermap.org/)<br>
+•	Sign up to [OpenWeatherMap](https://openweathermap.org/) - there is a free tier<br>
 •	In Unity, develop the functionality to call the OpenWeather API and get the weather info for the capital cities of each province in South Africa.<br>
 •	Display the latest weather data (city name, current temperature, description (cloudy, sunny etc) on a basic Unity UI.<br>
 •	Call the API automatically upon playing the scene.<br>

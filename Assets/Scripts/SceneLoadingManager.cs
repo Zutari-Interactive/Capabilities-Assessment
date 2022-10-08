@@ -11,7 +11,11 @@ public class SceneLoadingManager : MonoBehaviour
         StartCoroutine(LoadScene("Level One"));
     }
 
-    //Load any scene through async
+    /// <summary>
+    /// Load any scene through async
+    /// </summary>
+    /// <param name="sceneName">The name of the scene</param>
+    /// <returns></returns>
     IEnumerator LoadScene(string sceneName)
     {
         AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName);

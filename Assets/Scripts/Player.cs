@@ -47,6 +47,9 @@ public class Player : MonoBehaviour
         VelocityControl();
     }
 
+    /// <summary>
+    /// Moves the cube and associate a different color with each dirrection
+    /// </summary>
     public void MoveAndChangeColor()
     {
         //Move UP
@@ -78,6 +81,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Ensures the object is always in the camera's view
+    /// </summary>
     public void KeepObjectInView()
     {
         //Out of Field of view on the left
@@ -106,6 +112,9 @@ public class Player : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Controls the object velocity
+    /// </summary>
     public void VelocityControl()
     {
         //Increase velocity

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class BaseState 
 {
@@ -17,7 +14,7 @@ public class BaseState
     }
     #endregion
 
-    #region VIRTUAL METHODS
+    #region STATE METHODS
     public virtual void Enter() { }
     public virtual void UpdateLogic() { }
     public virtual void UpdatePhysics() { }

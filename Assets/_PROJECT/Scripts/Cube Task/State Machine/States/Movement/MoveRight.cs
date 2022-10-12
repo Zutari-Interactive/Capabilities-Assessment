@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class MoveRight : BaseState
 {
+    #region VARIABLES
     private float _horizontalInput;
     private float _boundary;
     private float _cubeWidth;
 
     private MovementSM _sm;
+    private Transform _cube;
+    #endregion
 
+    #region INITIALIZE STATE
     public MoveRight(MovementSM stateMachine) : base("Moving Right", stateMachine)
     {
         _sm = (MovementSM)stateMachine;
+        _cube = _sm.cubeTransform.transform;
     }
+    #endregion
 
+    #region STATE METHODS
     public override void Enter()
     {
         base.Enter();
@@ -22,7 +29,7 @@ public class MoveRight : BaseState
         _horizontalInput = 0f;
         _sm.cubeRenderer.material.SetColor("_Color", Color.blue);
 
-        _cubeWidth = _sm.cubeTransform.transform.localScale.x;
+        _cubeWidth = _cube.localScale.x;
         _boundary = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0-Camera.main.transform.position.z)).x;
 
 
@@ -48,10 +55,11 @@ public class MoveRight : BaseState
         velocity.x = _horizontalInput * _sm.speed;
         _sm.cubeRigidbody.velocity = velocity;
 
-        if (_sm.cubeTransform.transform.position.x > _boundary + _cubeWidth/2)
+        if (_cube.position.x > _boundary + _cubeWidth/2)
         {
-            _sm.cubeTransform.transform.position = new Vector3(_boundary * (-1) + _cubeWidth / 2, _sm.cubeTransform.transform.position.y, _sm.cubeTransform.transform.position.z);
+            _cube.position = new Vector3(_boundary * (-1) + _cubeWidth / 2, _cube.position.y, _cube.position.z);
         }
 
     }
+    #endregion
 }

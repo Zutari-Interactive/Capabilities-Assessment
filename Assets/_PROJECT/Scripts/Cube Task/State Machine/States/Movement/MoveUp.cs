@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class MoveUp : BaseState
 {
+    #region VARIABLES
     private float _verticalInput;
+    private float _boundary;
+    private float _cubeHeight;
 
     private MovementSM _sm;
+    private Transform _cube;
+    #endregion
 
+    #region INITIALIZE STATE
     public MoveUp(MovementSM stateMachine) : base("Moving Up", stateMachine)
     {
         _sm = (MovementSM)stateMachine;
+        _cube = _sm.cubeTransform.transform;
     }
+    #endregion
 
+    #region STATE METHODS
     public override void Enter()
     {
         base.Enter();
         _verticalInput = 0f;
         _sm.cubeRenderer.material.SetColor("_Color", Color.red);
+
+        
+
+        _cubeHeight = _cube.localScale.y;
+        _boundary = Camera.main.ScreenToWorldPoint(new Vector3(0f, Screen.height, 0 - Camera.main.transform.position.z)).y;
     }
 
     public override void UpdateLogic()
@@ -40,5 +54,12 @@ public class MoveUp : BaseState
         velocity.y = _verticalInput * _sm.speed;
         _sm.cubeRigidbody.velocity = velocity;
 
+        if (_cube.position.y > _boundary + _cubeHeight / 2)
+        {
+            // move cube position (multiplying by (-1))
+            _cube.position = new Vector3(_cube.position.x, _boundary * (-1) + _cubeHeight / 2, _cube.position.z);
+        }
+
     }
+    #endregion
 }

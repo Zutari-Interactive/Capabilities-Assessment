@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 public class WeatherModel
 {  
     public List<Weather> weather { get; set; }

@@ -13,10 +13,9 @@ public class WeatherController : MonoBehaviour
     #region VARIABLES
     [SerializeField]
     private List<string> cities = new List<string>();
-    //private List<WeatherModel> weatherModels = new List<WeatherModel>();
-    
     #endregion
 
+    #region UNITY EVENTS
     public void Start()
     {
         GameObject _template = transform.GetChild(0).gameObject;
@@ -25,7 +24,6 @@ public class WeatherController : MonoBehaviour
         foreach (var city in cities)
         {
             WeatherModel _weatherModel = APIHelper.GetWeatherData(city);
-            Debug.Log(_weatherModel.name);
 
             _placeHolder = Instantiate(_template, transform);  
 
@@ -34,10 +32,8 @@ public class WeatherController : MonoBehaviour
             _placeHolder.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = _weatherModel.weather[0].description;
         }
 
-        //Destroy(_template);
-
-
     }
+    #endregion
 
 
 }

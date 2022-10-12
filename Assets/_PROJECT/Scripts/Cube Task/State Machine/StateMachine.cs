@@ -38,7 +38,7 @@ public class StateMachine : MonoBehaviour
     }
     #endregion
 
-    #region HELPERS 
+    #region STATE CHANGE
     public void ChangeState(BaseState newState)
     {
         currentState.Exit();

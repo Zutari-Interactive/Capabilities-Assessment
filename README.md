@@ -2,38 +2,61 @@
 
 # **Zutari Unity Developer Interview Task** #
 
-Congratulations on making it this far into the interview process. We enjoyed speaking to you in your initial interview and would like to move on to testing some of your skills in the Unity engine.
+## Task 1
 
-Before you get started, assess the work required and let us know how long you expect the project to take you. We will expect to see your commit to the repo by this time and date. You have a maximum of 7 days from the day your receive this task.
+The system can be broken up into several different parts as briefly described below: 
 
-Please follow these instructions closely:<br>
+- ### Changing Scenes
 
-•	Clone the repo from here<br>
-•	Install and initialize Git LFS.<br>
-•	Open in the same version of Unity that the repo project was created in<br>
-•	Create a new branch from Main, name it your name.<br>
-•	Create a commit with comments after completing each step.<br>
-•	Push to Github only once all steps are complete<br>
-•	Do not merge back into Main.<br>
+This implementation is pretty straight forward, simply adding a method to a Button OnClick to transition between scenes using Unity's Scene Manager.
 
-Task 1:<br>
-•	Create two scenes; Main Menu and Level One. <br>
-•	In Main Menu scene, add a UI Button that will load in the Level One scene when the button is clicked.<br>
-•	Create a script to handle the loading of Level One.<br>
-•	In Level One scene, set the camera to ‘orthographic’.<br>
-•	Add a cube and set its position so that it is in the middle of the camera view.<br>
-•	Write a script that moves the cube with physics (ie using a rigidbody on the cube) up, down, left and right using the WASD keys.<br>
-•	The cube should change to a different colour for each direction it goes (eg, blue if moving left, yellow if moving down etc).<br>
-•	If the cube reaches the edges of the camera view it should re-appear on the opposite edge of the view (eg, if the cube goes off the left side of the view, it should re-appear on the right side of the screen).<br>
-•	Give the player the ability to change the velocity the cube travels at. Use your discretion to implement this, could be UI or keyboard inputs.<br>
+- ### Speed Controller
 
-Task 2:<br>
-•	Create a new scene called WeatherApp. <br>
-•	Sign up to [OpenWeatherMap](https://openweathermap.org/) - there is a free tier<br>
-•	In Unity, develop the functionality to call the OpenWeather API and get the weather info for the capital cities of each province in South Africa.<br>
-•	Display the latest weather data (city name, current temperature, description (cloudy, sunny etc) on a basic Unity UI.<br>
-•	Call the API automatically upon playing the scene.<br>
+Basic implemenation of iterating through a list of speeds when the "C" key is pressed. 
 
-If you have any questions please email them to us before you get started.
+- ### Cube Movement, Color Change, Boundary Wrapper
 
-Good luck!
+For these functionalities a simple Finite State Machine (FSM) was implemented. A FSM is a model that can be used to control execution flow. In this scenario, the FSM is made up of 5 states, that is: 
+- Idle
+- Move Left
+- Move Right
+- Move Up 
+- Move Down
+
+Each state represents a specific behaviour of the cube. Generally speaking, FSMs are a nice way of decoupling behaviours to better organise the project. The states themselves have 3 important points:
+
+| Method        | Description                                                  |
+|---------------|--------------------------------------------------------------|
+| Enter()       | Initialization process when transitioning to the state       |
+| UpdateLogic() | Logic that runs continuously when state is current           |
+| Exit()        | Any clean-ups or unsubscribe events before leaving the state |
+
+As such, the colour changes were implemented within the Enter() method. This was done by setting the material of the cube to a different colour.
+
+#### Input system
+For the actual input system, I used Unity's Input Manager which allows for use of arrows and wasd keys.
+
+Eg.
+
+``` Input.GetAxis("Vertical") ```
+
+This above returns a float. If negative it means down and vice versa. Therefore, state changes can be implemented comparing these to zero or epsilson. Every moving state transitions back to Idle (zero motion) before moving to another. 
+
+When receiving this value, it is multiplied by the chosen speed and applied onto the rigidbody to make it move. Usually this would be implemented in UpdateLogic() but used an UpdatePhysics() method that is called in LateUpdate(). Usually physics related tasks should be implemented in FixedUpdate, however, the physics needed to be performed after logic related tasks if there is to be a change in state. 
+
+#### Boundary Wrapper
+For the boundary wrapper, boundaries were determined using the camera position. Once determined, each boundary was related to one state (i.e. if moving right you can only hit the right boundary). Therefore, a conditional statement was executed in the state and if the boundary was hit, the position of the cube of that axis movement was multiplied by negative one (-1) hence the cube will move to the opposite side. I used a conditional, however, a collider could have worked just as well. 
+
+
+## Task 2
+
+The implementation can be put simply as pulling data from an API, deserializing the data, and displaying it. 
+
+Using ```HttpWebRequest``` a call was created to pull relevant data from the API by specifying a city. Once a response is received, the data is deserialized using ```NewtonSoft.JsonConvert``` and a C# data model is returned relevant to the json properties. The data model consists of 3 properties, that being: 
+
+- Name of the city
+- Another model *Main* which contains the current temperature
+- Another model *Weather* which contains the description of the weather
+
+Once the data model is assigned, I created a prefab as template to use for display. Finally, on start of the program, the template was instantiated and the data model was applied on the relevant text fields for display. 
+

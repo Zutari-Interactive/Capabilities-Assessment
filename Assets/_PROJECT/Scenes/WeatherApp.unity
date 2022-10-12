@@ -484,8 +484,9 @@ MonoBehaviour:
   - Pietermaritzburg
   - Polokwane
   - Kimberley
-  - Mahikeng
   - Cape Town
+  - Mbombela
+  - Mafikeng
   weatherItem: {fileID: 536771632}
   panel: {fileID: 1764689933}
 --- !u!114 &1764689935

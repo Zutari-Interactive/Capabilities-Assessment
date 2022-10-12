@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Idle : BaseState
 {
+    #region VARIABLES
     private float _horizontalInput;
     private float _verticalInput; 
 
     private MovementSM _sm;
+    #endregion
 
-
+    #region INITIALIZE
     public Idle(MovementSM stateMachine) :  base("Idle", stateMachine) 
     {
         _sm = (MovementSM)stateMachine;
     }
+    #endregion
 
+    #region STATE METHODS
     public override void Enter()
     {
         base.Enter();
@@ -63,5 +67,5 @@ public class Idle : BaseState
         _sm.cubeRigidbody.velocity = Vector3.zero;
 
     }
+    #endregion
 }
-    

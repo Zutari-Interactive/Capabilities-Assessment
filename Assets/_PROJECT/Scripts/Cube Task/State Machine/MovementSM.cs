@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovementSM : StateMachine
 {
+    #region VARIABLES
     [HideInInspector]
     public Idle idleState;
     [HideInInspector]
@@ -21,9 +22,10 @@ public class MovementSM : StateMachine
 
     [HideInInspector]
     public float speed;
-    
+    #endregion
 
 
+    #region UNITY EVENTS
     private void Awake()
     {
         idleState = new Idle(this);
@@ -32,17 +34,22 @@ public class MovementSM : StateMachine
         moveDownState = new MoveDown(this);
         moveUpState = new MoveUp(this);
     }
+    #endregion
 
+    #region START STATE INITIALIZE
     protected override BaseState GetInitialState()
     {
         return idleState;
     }
+    #endregion
 
+    #region GUI
     private void OnGUI()
     {
         string content = speed.ToString();
         GUILayout.Label($"<color='black'><size=40>{"Speed is: " + content}</size></color>");
     }
+    #endregion
 
 
 }

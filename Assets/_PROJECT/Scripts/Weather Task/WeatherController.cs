@@ -13,23 +13,30 @@ public class WeatherController : MonoBehaviour
     #region VARIABLES
     [SerializeField]
     private List<string> cities = new List<string>();
+    [SerializeField]
+    private WeatherItem weatherItem;
+    [SerializeField]
+    private Transform panel;
+    
     #endregion
 
     #region UNITY EVENTS
     public void Start()
     {
-        GameObject _template = transform.GetChild(0).gameObject;
-        GameObject _placeHolder;
+        WeatherItem tempWeatherItem;
 
         foreach (var city in cities)
         {
-            WeatherModel _weatherModel = APIHelper.GetWeatherData(city);
+            WeatherModel weatherModel = APIHelper.GetWeatherData(city);
 
-            _placeHolder = Instantiate(_template, transform);  
+            tempWeatherItem = Instantiate(weatherItem);
+            tempWeatherItem.transform.SetParent(panel, false);
 
-            _placeHolder.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _weatherModel.name;
-            _placeHolder.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _weatherModel.main.temp.ToString();
-            _placeHolder.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = _weatherModel.weather[0].description;
+            tempWeatherItem.Initialize(
+                cityName: weatherModel.name,
+                temperature: weatherModel.main.temp.ToString(),
+                description: weatherModel.weather[0].description
+                );
         }
 
     }
